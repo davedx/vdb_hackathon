@@ -1,38 +1,49 @@
+var init = false;
 
-function House (props) {
-  var camera, scene, renderer;
-  var mesh;
-  
-  init();
+class House extends React.Component {
+  render () {
+    console.log('house.render');
+    return <div className="house-area" ref="house3d"></div>
+  }
 
-  animate();
+  componentDidMount () {
+    if (init) {
+      return;
+    }
+    init = true;
+    console.log('mounting three');
 
-  function init() {
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.z = 400;
-    scene = new THREE.Scene();
+    var mesh;
+
+    this.camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    this.camera.position.z = 400;
+    this.scene = new THREE.Scene();
     var texture = new THREE.TextureLoader().load( 'llama.jpg' );
     var geometry = new THREE.BoxBufferGeometry( 200, 200, 200 );
     var material = new THREE.MeshBasicMaterial( { map: texture } );
     mesh = new THREE.Mesh( geometry, material );
-    scene.add( mesh );
-    renderer = new THREE.WebGLRenderer();
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
-    //
-    window.addEventListener( 'resize', onWindowResize, false );
+    this.scene.add( mesh );
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setPixelRatio( window.devicePixelRatio );
+    console.log('setting renderer size: ', this.refs.house3d.clientWidth, this.refs.house3d.clientHeight);
+    this.renderer.setSize(this.refs.house3d.clientWidth, this.refs.house3d.clientHeight);
+
+    this.refs.house3d.appendChild(this.renderer.domElement);
+
+    //window.addEventListener('resize', this.onWindowResize.bind(this), false);
+
+    this._animate = this.animate.bind(this);
+    this._animate();
   }
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
+
+  onWindowResize () {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize( window.innerWidth, window.innerHeight );
   }
-  function animate() {
-    requestAnimationFrame( animate );
-    mesh.rotation.x += 0.005;
-    mesh.rotation.y += 0.01;
-    renderer.render( scene, camera );
+  
+  animate () {
+    requestAnimationFrame(this._animate);
+    this.renderer.render(this.scene, this.camera);
   }
-  return <div></div>
 }

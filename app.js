@@ -65,11 +65,9 @@ function InputsSection (props) {
             </strong>
           </div>
         </form>
-
-        <House />
       </div>
       <div className="col-md-6">
-        <h1>Three.js here</h1>
+        <House />
       </div>
     </div>
     <div className="row">
