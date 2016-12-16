@@ -56,9 +56,9 @@ function InputsSection (props) {
       <div className="col-md-6">
         <h1>House</h1>
         <form>
-          <Input type="range" label="Width" id="width" value={props.width} min="1" max="100" onChangeFunction={changeFunction} />
-          <Input type="range" label="Heigth" id="height" value={props.height} min="2" max="10" onChangeFunction={changeFunction} />
-          <Input type="range" label="Breadth" id="breadth" value={props.breadth} min="1" max="100" onChangeFunction={changeFunction} />
+          <Input type="range" label="Width" id="width" value={props.width} min="5" max="20" onChangeFunction={changeFunction} />
+          <Input type="range" label="Height" id="height" value={props.height} min="3" max="10" onChangeFunction={changeFunction} />
+          <Input type="range" label="Breadth" id="breadth" value={props.breadth} min="5" max="20" onChangeFunction={changeFunction} />
           <div>
             <strong>
               Volume: {props.width * props.height * props.breadth}
@@ -67,7 +67,7 @@ function InputsSection (props) {
         </form>
       </div>
       <div className="col-md-6">
-        <House />
+        <House {...props} />
       </div>
     </div>
     <div className="row">
