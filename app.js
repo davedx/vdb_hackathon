@@ -4,7 +4,8 @@ var store = {
   width: 10,
   height: 4,
   breadth: 10,
-  doubleGlazing: "true"
+  doubleGlazing: 'true',
+  type: 'new'
 };
 
 let Actions = {
@@ -19,6 +20,12 @@ class Input extends React.Component {
     if (this.props.onChangeFunction) {
       const val = e.target.value;
       this.props.onChangeFunction({key: this.props.id, value: val});
+    }
+  }
+  onRadioChange(e) {
+    if (this.props.onChangeFunction) {
+      const val = e.target.value;
+      this.props.onChangeFunction({key: this.props.name, value: val});
     }
   }
 
@@ -38,8 +45,8 @@ class Input extends React.Component {
       label = <label htmlFor={this.props.id}>{this.props.label}&nbsp;</label>;
       input = <input type={this.props.type} id={this.props.id}
               value={this.props.value}
-              checked={store[this.props.id] === this.props.value}
-              onChange={(e) => this.onChange(e)}
+              checked={store[this.props.name] === this.props.value}
+              onChange={(e) => this.onRadioChange(e)}
               name={this.props.name} />;
     } else {
       label = <label htmlFor={this.props.id}>{this.props.label}: {this.props.value}</label>;
@@ -83,7 +90,23 @@ function InputsSection (props) {
                 <Input type="radio" label="Yes" id="doubleGlazing" name="doubleGlazing" value="true" onChangeFunction={changeFunction} />
               </div>
               <div className="col-xs-6">
-                <Input type="radio" label="No" id="doubleGlazing" name="doubleGlazing" value="false" onChangeFunction={changeFunction} />
+                <Input type="radio" label="No" id="NoDoubleGlazing" name="doubleGlazing" value="false" onChangeFunction={changeFunction} />
+              </div>
+            </div>
+          </div>
+          <div>
+            <strong>
+              Year built:
+            </strong>
+            <div className="row">
+              <div className="col-xs-4">
+                <Input type="radio" label="<1992" id="old" name="type" value="old" onChangeFunction={changeFunction} />
+              </div>
+              <div className="col-xs-4">
+                <Input type="radio" label=">=1992" id="new" name="type" value="new" onChangeFunction={changeFunction} />
+              </div>
+              <div className="col-xs-4">
+                <Input type="radio" label="<1992 insulated" id="old-insulated" name="type" value="old-insulated" onChangeFunction={changeFunction} />
               </div>
             </div>
           </div>
