@@ -2,7 +2,7 @@ var topLevelRenderFunction;
 
 var store = {
   width: 10,
-  height: 4,
+  height: 5,
   breadth: 10,
   doubleGlazing: 'true',
   type: 'new'
