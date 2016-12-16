@@ -1,26 +1,70 @@
 var topLevelRenderFunction;
 
-let Actions = {
-  changeMyPageSliderVal: function (e) {
-    var val = 35;
-    console.log('val changed! ', val);
-    store.MyPage.sliderValue = val;
-    topLevelRenderFunction();
-  }
-}
-
 var store = {
-  MyPage: {
-    sliderValue: 30
+  width: 10,
+  height: 4,
+  breadth: 10
+};
+
+let Actions = {
+  changeInput: function (params) {
+    store[params.key] = params.value;
+    topLevelRenderFunction();
   }
 };
 
+class Input extends React.Component {
+  onChange (e) {
+    if (this.props.onChangeFunction) {
+      const val = e.target.value;
+      this.props.onChangeFunction({key: this.props.id, value: val});
+    }
+  }
+
+  render () {
+    let input;
+    if (this.props.type === 'range') {
+      input = <input type={this.props.type} id={this.props.id}
+              className="form-control"
+              value={this.props.value}
+              readOnly={this.props.readOnly}
+              onChange={(e) => this.onChange(e)}
+              min={this.props.min}
+              max={this.props.max}
+              step="1"/>;
+    } else {
+      input = <input type={this.props.type} id={this.props.id}
+              className="form-control"
+              value={this.props.value}
+              readOnly={this.props.readOnly}
+              onChange={(e) => this.onChange(e)}/>;
+    }
+
+    return (
+      <div className="form-group">
+        <label htmlFor={this.props.id}>{this.props.label}: {this.props.value}</label>
+        {input}
+      </div>
+    );
+  }
+}
 
 function InputsSection (props) {
+  const changeFunction = Actions.changeInput;
   return <div className="inputs-section">
     <div className="row">
       <div className="col-md-6">
         <h1>House</h1>
+        <form>
+          <Input type="range" label="Width" id="width" value={props.width} min="1" max="100" onChangeFunction={changeFunction} />
+          <Input type="range" label="Heigth" id="height" value={props.height} min="2" max="10" onChangeFunction={changeFunction} />
+          <Input type="range" label="Breadth" id="breadth" value={props.breadth} min="1" max="100" onChangeFunction={changeFunction} />
+          <div>
+            <strong>
+              Volume: {props.width * props.height * props.breadth}
+            </strong>
+          </div>
+        </form>
 
         ...controls here...
       </div>
@@ -64,11 +108,10 @@ class App extends React.Component {
   }
 
   render () {
-    console.log('render!');
     if (!this.state) return null;
 
-    return <div>
-      <InputsSection />
+    return <div className="container">
+      <InputsSection {...this.state} />
       <OutputsSection />
     </div>
   }
