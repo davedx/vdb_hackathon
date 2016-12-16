@@ -22,7 +22,7 @@ function InputsSection (props) {
       <div className="col-md-6">
         <h1>House</h1>
 
-        ...controls here...
+        <House />
       </div>
       <div className="col-md-6">
         <h1>Three.js here</h1>

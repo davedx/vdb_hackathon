@@ -11,7 +11,7 @@ function House (props) {
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.z = 400;
     scene = new THREE.Scene();
-    var texture = new THREE.TextureLoader().load( 'textures/crate.gif' );
+    var texture = new THREE.TextureLoader().load( 'llama.jpg' );
     var geometry = new THREE.BoxBufferGeometry( 200, 200, 200 );
     var material = new THREE.MeshBasicMaterial( { map: texture } );
     mesh = new THREE.Mesh( geometry, material );
@@ -34,4 +34,5 @@ function House (props) {
     mesh.rotation.y += 0.01;
     renderer.render( scene, camera );
   }
+  return <div></div>
 }
