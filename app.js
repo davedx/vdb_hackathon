@@ -5,7 +5,9 @@ var store = {
   height: 5,
   breadth: 10,
   doubleGlazing: 'true',
-  type: 'new'
+  type: 'new',
+  gas: 1000,
+  electricity: 500,
 };
 
 let Actions = {
@@ -49,7 +51,7 @@ class Input extends React.Component {
               onChange={(e) => this.onRadioChange(e)}
               name={this.props.name} />;
     } else {
-      label = <label htmlFor={this.props.id}>{this.props.label}: {this.props.value}</label>;
+      label = <label htmlFor={this.props.id}>{this.props.label}: </label>;
       input = <input type={this.props.type} id={this.props.id}
               className="form-control"
               value={this.props.value}
@@ -110,6 +112,8 @@ function InputsSection (props) {
               </div>
             </div>
           </div>
+          <Input type="text" label="Electricity usage" id="electricity" value={props.electricity} onChangeFunction={changeFunction} />
+          <Input type="text" label="Gas usage" id="gas" value={props.gas} onChangeFunction={changeFunction} />
         </form>
       </div>
       <div className="col-md-6">
